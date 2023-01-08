@@ -33,6 +33,19 @@ func postAlbums(ctx *gin.Context) {
 	ctx.IndentedJSON(http.StatusCreated, newAlbum)
 }
 
+func deleteAlbums(ctx *gin.Context) {
+	id := ctx.Param("id")
+
+	for i, album := range albums {
+		if album.ID == id {
+			albums = append(albums[:i], albums[i+1:]...)
+			break
+		}
+	}
+
+	ctx.IndentedJSON(http.StatusOK, albums)
+}
+
 func getAlbumByID(ctx *gin.Context) {
 	id := ctx.Param("id")
 
