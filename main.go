@@ -18,11 +18,11 @@ var albums = []album{
 	{ ID: "3", Title: "Sarah Vaughan and Clifford Brown", Artist: "Sarah Vaughan", Price: 39.99},
 }
 
-func getAlbums(ctx *gin.Context) {
+func GetAlbums(ctx *gin.Context) {
 	ctx.IndentedJSON(http.StatusOK, albums)
 }
 
-func postAlbums(ctx *gin.Context) {
+func CreateAlbums(ctx *gin.Context) {
 	var newAlbum album
 
 	if err := ctx.BindJSON(&newAlbum); err != nil {
@@ -33,7 +33,7 @@ func postAlbums(ctx *gin.Context) {
 	ctx.IndentedJSON(http.StatusCreated, newAlbum)
 }
 
-func deleteAlbums(ctx *gin.Context) {
+func DeleteAlbums(ctx *gin.Context) {
 	id := ctx.Param("id")
 
 	for i, album := range albums {
@@ -46,7 +46,7 @@ func deleteAlbums(ctx *gin.Context) {
 	ctx.IndentedJSON(http.StatusOK, albums)
 }
 
-func getAlbumByID(ctx *gin.Context) {
+func GetAlbumByID(ctx *gin.Context) {
 	id := ctx.Param("id")
 
 	for _, a := range albums {
@@ -61,9 +61,9 @@ func getAlbumByID(ctx *gin.Context) {
 
 func main() {
 	router := gin.Default()
-	router.GET("/albums", getAlbums)
-	router.GET("/albums/:id", getAlbumByID)
-	router.POST("/albums", postAlbums)
-	router.DELETE("/albums/:id", deleteAlbums)
+	router.GET("/albums", GetAlbums)
+	router.GET("/albums/:id", GetAlbumByID)
+	router.POST("/albums", CreateAlbums)
+	router.DELETE("/albums/:id", DeleteAlbums)
 	router.Run("localhost:8080")
 }
